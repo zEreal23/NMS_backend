@@ -31,7 +31,7 @@ exports.read = (req, res) => {
 };
 
 exports.update = (req, res) => {
-    console.log('req.body', req.body);
+    console.log('req.body', req.body.name);
     console.log('category update param', req.params.categoryId);
 
     const category = req.category;
