@@ -7,6 +7,7 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const expressValidator = require('express-validator')
 const cors = require('cors')
+const {readdirSync} = require("fs")
 
 //import router
 const authRoutes = require('./routes/auth');
@@ -24,10 +25,7 @@ app.use(cookieParser())
 app.use(expressValidator())
 
  //routes
-app.use('/api' ,authRoutes)
-app.use('/api' ,userRoutes)
-app.use('/api' ,categoryRoutes)
-app.use('/api' ,productRoutes)
+readdirSync('./routes').map((r) => app.use('/api', require('./routes/'+ r)))
 
 const port = process.env.PORT || 8000
 

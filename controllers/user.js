@@ -14,7 +14,7 @@ exports.userById = (req, res, next, id) => {
 };
 
 exports.read = (req, res) => {
-    return res.json(req.user);
+    return res.json(req.profile);
 };
 
 exports.list = (req, res) => {
@@ -28,25 +28,22 @@ exports.list = (req, res) => {
   });
 };
 
-exports.update = (req, res) => {
-  console.log("req.body", req.body.name);
-  console.log("category update param", req.params.userId);
-
-  const user = req.user;
-  user.name = req.body.name;
-  user.save((err, data) => {
-    if (err) {
+exports.update = async(req, res) => {
+  const { name } = req.body;
+  if(!name) {
       return res.status(400).json({
-        error: errorHandler(err),
+          error: 'Bad Request'
       });
-    }
-    res.json(data);
-  });
-};
+  }
+  
+ const data = await User.findOneAndUpdate({ _id: req.profile._id }, {$set:{name:name}})
+  console.log(data)
+  return res.status(200).json(data)
+}
 
 exports.remove = (req, res) => {
-    let user = req.user;
-    user.remove((err) => {
+    let user = req.profile;
+    user.remove((err, data) => {
       if (err) {
         return res.status(400).json({
           error: errorHandler(err),

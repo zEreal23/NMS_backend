@@ -22,22 +22,19 @@ exports.signin = (req, res) => {
   const { email, password } = req.body;
   User.findOne({ email }, (err, user) => {
     if (err || !user) {
-      return (
-        res.status(400),
-        json({
+      return res.status(400).json({
           error: "User with that email does not exist, Please signup",
         })
-      );
     }
     //check email and password match
     //crate authenticate method in user model
     if (!user.authenticate(password)) {
       return res.status(401).json({
-        error: "Email and Password dont match",
+        error: "Email and Password not match",
       });
     }
     //generate a signed token with user id and secret
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET);
     //persist the token as 't' in cookie with expirt date
     res.cookie("t", token, { expire: new Date() + 9999 });
     //return response with user and token to frontend client
@@ -58,11 +55,23 @@ exports.requireSignin = expressJwt({
 });
 
 exports.isAuth = (req, res, next) => {
-  let user = req.profile && req.auth && req.profile._id == req.auth._id;
-  if (!user) {
-    return res.status(403).json({
-      error: "Access denied",
-    });
+  const isRequest = req.profile && req.auth
+  if(!isRequest){
+    return res.status(400).json({
+       message:'Bad Request'
+      })
+  }
+
+  const sameuser = String(req.profile._id) === String(req.auth._id);
+  const admin = req.auth.role === 1;
+
+  if (!admin) {
+    console.log(admin)
+    if(!sameuser){
+      return res.status(403).json({
+        message: "Access Denied"
+      })
+    }
   }
   next();
 };

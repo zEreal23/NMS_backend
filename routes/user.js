@@ -14,8 +14,8 @@ router.get("/secret/:userId", requireSignin, isAuth, isAdmin, (req, res) => {
 });
 
 router.get("/users" , list);
-router.get("/user/:userOneId" ,read)
-router.put("/user/:userEditId/:userId", requireSignin, isAuth, isAdmin, update)
-router.delete("/user/:userDelId/:userId", requireSignin, isAuth, isAdmin, remove)
+router.get("/user/:userId" ,requireSignin, isAuth, read)
+router.put("/user/:userId", requireSignin, isAuth, update)
+router.delete("/user/:userId", requireSignin, isAuth,  remove)
 
 module.exports = router;

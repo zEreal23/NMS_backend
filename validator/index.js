@@ -40,6 +40,7 @@ exports.userSigninValidator = (req , res , next) =>{
             const erros = req.validationErrors()
             if(erros) {
                 const firstError = erros.map(error => error.msg)[0];
+                console.log(firstError)
                 return res.status(400).json({error: firstError})
             }
             next();
