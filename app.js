@@ -14,6 +14,7 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const categoryRoutes = require('./routes/category');
 const productRoutes = require('./routes/product');
+const orderRoutes = require('./routes/order')
 
 dotenv.config()
 
@@ -26,7 +27,11 @@ app.use(expressValidator())
 
  //routes
 readdirSync('./routes').map((r) => app.use('/api', require('./routes/'+ r)))
-
+app.use('/api' ,authRoutes)
+app.use('/api' ,userRoutes)
+app.use('/api' ,categoryRoutes)
+app.use('/api' ,productRoutes)
+app.use('/api' ,orderRoutes)
 const port = process.env.PORT || 8000
 
 app.listen(port , () =>{
