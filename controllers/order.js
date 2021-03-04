@@ -3,7 +3,7 @@ const { errorHandler } = require("../helpers/dbErrorHandler");
 
 exports.create=(req,res)=>{
     console.log("CREATE ORDER",req.body);
-    req.body.order.Tables = req.profile
+    req.body.order.table = req.table
     const order = new Order(req.body.order)
     console.log(order)
     order.save((err,data)=>{

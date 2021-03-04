@@ -29,7 +29,7 @@ const OrderSchema = new mongoose.Schema(
       enum: ["Not processed", "Processing","Cancelled"] // enum means string objects
     },
     updated: Date,
-    noTables: { type: ObjectId, ref: "Tables" }
+    table: { type: ObjectId, ref: "Tables" }
   },
   
   { timestamps: true }
