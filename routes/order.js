@@ -1,12 +1,12 @@
 const express = require("express")
 const router = express.Router();
-const {requireSignin,isAuth} = require("../controllers/auth");
-const {talbeById} = require("../controllers/table");
+
+const {tById} = require("../controllers/t");
 const {create,listOrders} = require("../controllers/order");
 
+router.get('/order/list',listOrders);
 router.post('/order/create/:tableId',create);
-router.param("tableId" , talbeById)
+
+router.param("tableId" , tById)
 
 module.exports = router;
-
-router.get('/order/list',listOrders);

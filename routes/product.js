@@ -15,7 +15,7 @@ const {
 } = require("../controllers/product");
 const { requireSignin, isAuth, isAdmin } = require("../controllers/auth");
 const { userById } = require("../controllers/user");
-const { talbeById } = require('../controllers/table')
+const { tById } = require('../controllers/t')
 
 router.get("/product/:productId", read);
 router.post("/product/create/:userId", requireSignin, isAuth, isAdmin, create);
@@ -42,6 +42,6 @@ router.get("/product/photo/:productId", photo);
 
 router.param("userId", userById);
 router.param("productId", productById);
-router.param("tableId" , talbeById);
+router.param("tableId" , tById);
 
 module.exports = router;
