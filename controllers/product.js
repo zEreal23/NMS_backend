@@ -85,14 +85,6 @@ exports.update = (req, res) => {
       });
     }
 
-    // check for all fields
-    /*const { name, price, category, quantity } = fields;
-    if (!name || !price || !category || !quantity) {
-      return res.status(400).json({
-        error: "All fields are required",
-      });
-    }*/
-
     let product = req.product;
     product = _.extend(product, fields);
 
@@ -121,12 +113,6 @@ exports.update = (req, res) => {
   });
 };
 
-/**
- * sell / arrival
- * by sell = /products?sortBy=sold&order=desc&limit=4
- * by arrival = /products?sortBy=createdAt&order=desc&limit=4
- * if no params are sent, then all products are returned
- */
 exports.list = (req, res) => {
   let order = req.query.order ? req.query.order : 'asc';
   let sortBy = req.query.sortBy ? req.query.sortBy : '_id';
@@ -144,13 +130,9 @@ exports.list = (req, res) => {
               });
           }
           res.json(products);
+          console.log(products)
       });
 };
-
-/**
- * it will find the products based on the req product category
- * other products that has the same category, will be returned
- */
 
 exports.listRelated = (req, res) => {
   let limit = req.query.limit ? parseInt(req.query.limit) : 6;

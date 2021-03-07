@@ -6,13 +6,13 @@ const Promotion = require("../models/promotion");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 
 exports.promotionById = (req, res, next, id) => {
-    Promotion.findById(id).exec((err, product) => {
-    if (err || !product) {
+    Promotion.findById(id).exec((err, promotion) => {
+    if (err || !promotion) {
       return res.status(400).json({
         error: "Promotion not found",
       });
     }
-    req.Promotion = Promotion;
+    req.promotion = promotion;
     next();
   });
 };
@@ -147,4 +147,3 @@ exports.photo = (req, res, next) => {
     }
     next();
   };
-
