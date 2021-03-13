@@ -32,7 +32,7 @@ const productSchema = mongoose.Schema({
     },
     tableId: {
         type: Schema.Types.ObjectId,
-        required: true,
+    
         ref: 'T'
       }
 },{timestamps: true})

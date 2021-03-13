@@ -20,7 +20,11 @@ const orderSchema = new Schema(
         ref: "t"
       },
      },
-     amount: { type: Number, required: true}
+     amount: { type: Number, required: true},
+     status: {
+       type: String,
+       default: 'Waiting'
+     }
   },
   { timestamps: true }
 );
