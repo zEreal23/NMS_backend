@@ -11,7 +11,6 @@ const cors = require('cors');
 const multer = require('multer');
 const {readdirSync} = require('fs');
 const {v4: uuidv4} = require('uuid');
-const {clearImageByFilePath} = require('./helpers/file');
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -61,7 +60,8 @@ app.use('/api', categoryRoutes);
 app.use('/api', productRoutes);
 app.use('/api', orderRoutes);
 app.use('/api', reportRoutes);
-const port = process.env.PORT || 8000;
+// const port = process.env.PORT || 8000;
+const port = 3020;
 
 app.listen(port, () => {
     console.log(`PORT:${port}`);
@@ -79,7 +79,7 @@ app.put('/api/post-image', upload.single('photo'), (req, res, next) => {
 
 //db connection
 mongoose
-    .connect(process.env.MONGO_URI, {
+    .connect('mongodb+srv://zEreal23:12345@cluster0.5v5iw.mongodb.net/nms?retryWrites=true&w=majority', {
         useNewUrlParser: true,
         useCreateIndex: true,
         useUnifiedTopology: true,
