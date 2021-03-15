@@ -18,7 +18,7 @@ exports.reportBestSeles = async (req, res) => {
 
 exports.reportBadSeles = async (req, res) => {
     try {
-        const products = await Product.find().sort('+sold').limit(5).populate('category');
+        const products = await Product.find().sort('sold').limit(5).populate('category');
         const result = products.map((product, index) => ({
             no: index + 1,
             amount: product.sold,
