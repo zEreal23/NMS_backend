@@ -83,3 +83,18 @@ exports.reportImcomeMonth = async (req, res) => {
         return res.status(500).json({message: err.message});
     }
 };
+
+exports.reportImcomeYear = async (req, res) => {
+    try {
+            const order = await Order.find();
+            let sum = _.reduce(order, function(memo, reading){ return memo + reading.amount; }, 0);
+            const data = {
+                amount: sum
+            }
+            //result.push(data)
+        return res.status(200).json(data);
+    } catch (err) {
+        return res.status(500).json({message: err.message});
+    }
+};
+
