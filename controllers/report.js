@@ -37,7 +37,6 @@ exports.reportBadSeles = async (req, res) => {
 exports.reportImcomeDays = async (req, res) => {
     const week = 7;
     let result = [];
-
     try {
         for (let i = 0; i < week; i++) {
             const startDay = moment().subtract(i, 'days').startOf('day');
@@ -52,10 +51,9 @@ exports.reportImcomeDays = async (req, res) => {
             );
             const data = {
                 time: moment().subtract(i, 'days'),
-                day: moment().subtract(i, 'days').calendar(),
+                day: moment().subtract(i, 'days').format('DD-MM-YYYY'),
                 amount: sum,
             };
-
             result.push(data);
         }
         return res.status(200).json(result);
@@ -80,7 +78,7 @@ exports.reportImcomeMonth = async (req, res) => {
             }
             result.push(data)
         }
-        return res.status(200).json({data: result});
+        return res.status(200).json(result);
     } catch (err) {
         return res.status(500).json({message: err.message});
     }
