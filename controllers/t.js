@@ -113,18 +113,18 @@ exports.list = async (req, res) => {
     //     });
 };
 
-exports.postCart = (req, res, next) => {
-    const prodId = req.body.productId;
-    console.log('1', prodId);
-    const t = req.t;
-    Product.findById(prodId)
-        .then((product) => {
-            console.log(t);
-            return t.addToCart(product);
-        })
-        .then((result) => {
-            console.log(result);
-        });
+exports.postCart = async (req, res, next) => {
+    try {
+        const prodId = req.body.productId;
+        console.log(prodId)
+        const t = req.t;
+        const product = await Product.findById(prodId);
+        await t.addToCart(product);
+        return res.status(200).json({message:"Success"})
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({error: 'Failed'});
+    }
 };
 
 exports.getCart = (req, res, next) => {
