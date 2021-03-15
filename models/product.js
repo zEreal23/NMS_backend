@@ -20,8 +20,8 @@ const productSchema = mongoose.Schema({
         required: true
     },
     photo:{
-        data: Buffer,
-        contentType: String
+        type: String,
+        require: true,
     },
     quantity:{
         type: Number
@@ -32,7 +32,6 @@ const productSchema = mongoose.Schema({
     },
     tableId: {
         type: Schema.Types.ObjectId,
-    
         ref: 'T'
       }
 },{timestamps: true})
