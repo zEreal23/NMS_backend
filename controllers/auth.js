@@ -2,8 +2,6 @@ const jwt = require('jsonwebtoken'); //to generate signed token
 const expressJwt = require('express-jwt'); //for authorization check
 
 const User = require('../models/user');
-const {errorHandler} = require('../helpers/dbErrorHandler');
-const {json} = require('body-parser');
 
 exports.signup = (req, res) => {
     console.log('req.body', req.body);
@@ -63,10 +61,9 @@ exports.isAuth = (req, res, next) => {
     }
 
     const sameuser = String(req.profile._id) === String(req.auth._id);
-    const admin = req.auth.role === 1;
+    const admin = req.auth.role === "admin";
 
     if (!admin) {
-        console.log(admin);
         if (!sameuser) {
             return res.status(403).json({
                 message: 'Access Denied',
@@ -77,7 +74,7 @@ exports.isAuth = (req, res, next) => {
 };
 
 exports.isAdmin = (req, res, next) => {
-    if (req.profile.role === 0) {
+    if (!req.profile.role === "admin"||!req.profile.role === "staff") {
         return res.status(403).json({
             error: 'Admin resourse! Access denied',
         });
