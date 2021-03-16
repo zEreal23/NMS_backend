@@ -74,7 +74,7 @@ exports.isAuth = (req, res, next) => {
 };
 
 exports.isAdmin = (req, res, next) => {
-    if (!req.profile.role === "admin"||!req.profile.role === "staff") {
+    if (!req.profile.role === "admin"||!req.profile.role === "staff"||!req.profile.role === "chef") {
         return res.status(403).json({
             error: 'Admin resourse! Access denied',
         });
