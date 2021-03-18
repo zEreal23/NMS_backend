@@ -45,12 +45,12 @@ exports.read = (req, res) => {
     return res.json(req.t);
 };
 
-exports.update = (req, res) => {
+/*exports.update = (req, res) => {
     console.log('req.body', req.body.name);
-    console.log('category update param', req.params.tId);
-
     const t = req.t;
+    console.log(t)
     t.name = req.body.name;
+    console.log(t.name)
     t.save((err, data) => {
         if (err) {
             return res.status(400).json({
@@ -59,7 +59,27 @@ exports.update = (req, res) => {
         }
         res.json(data);
     });
-};
+};*/
+
+exports.update = async(req, res) => {
+    const { name } = req.body;
+
+    if(!name) {
+        return res.status(400).json({
+            error: 'Bad Request'
+        });
+    }
+
+
+    
+    try {
+        const data = await T.findOneAndUpdate({ _id: req.t._id }, {$set: {name:name}})
+         console.log(data)
+         return res.status(200).json(data)
+    } catch (err){
+        return res.status(400).json({ error: errorHandler(err)})
+    }
+  }
 
 exports.remove = (req, res) => {
     const t = req.t;

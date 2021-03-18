@@ -29,14 +29,14 @@ exports.list = (req, res) => {
 };
 
 exports.update = async(req, res) => {
-  const { name } = req.body;
+  const { name , email} = req.body;
   if(!name) {
       return res.status(400).json({
           error: 'Bad Request'
       });
   }
   
- const data = await User.findOneAndUpdate({ _id: req.profile._id }, {$set:{name:name}})
+ const data = await User.findOneAndUpdate({ _id: req.profile._id }, {$set:{name:name, email:email}})
   console.log(data)
   return res.status(200).json(data)
 }

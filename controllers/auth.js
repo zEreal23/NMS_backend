@@ -34,7 +34,7 @@ exports.signin = (req, res) => {
         //generate a signed token with user id and secret
         const token = jwt.sign({_id: user._id, role: user.role}, 'hasdksajdksadjsacnkcaksdjas');
         //persist the token as 't' in cookie with expirt date
-        res.cookie('t', token, {expire: new Date() + 9999});
+        //res.cookie('t', token, {expire: new Date() + 9999});
         //return response with user and token to frontend client
         const {_id, name, email, role} = user;
         return res.json({token, user: {_id, name, email, role}});
