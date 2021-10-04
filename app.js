@@ -35,14 +35,6 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
-//import router
-const authRoutes = require('./routes/auth');
-const userRoutes = require('./routes/user');
-const categoryRoutes = require('./routes/category');
-const productRoutes = require('./routes/product');
-const orderRoutes = require('./routes/order');
-const reportRoutes = require('./routes/report');
-
 dotenv.config();
 
 //midldleware
@@ -54,12 +46,7 @@ app.use(expressValidator());
 
 //routes
 readdirSync('./routes').map((r) => app.use('/api', require('./routes/' + r)));
-app.use('/api', authRoutes);
-app.use('/api', userRoutes);
-app.use('/api', categoryRoutes);
-app.use('/api', productRoutes);
-app.use('/api', orderRoutes);
-app.use('/api', reportRoutes);
+
 // const port = process.env.PORT || 8000;
 const port = 3020;
 
@@ -76,12 +63,14 @@ app.put('/api/post-image', upload.single('photo'), (req, res, next) => {
     }
     return res.status(201).json({error: 'File stored.', filePath: req.file.path});
 });
-
 //db connection
 mongoose
-    .connect('mongodb+srv://zEreal23:12345@cluster0.5v5iw.mongodb.net/nms?retryWrites=true&w=majority', {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useUnifiedTopology: true,
-    })
+    .connect(
+        'mongodb+srv://zEreal23:12345@cluster0.5v5iw.mongodb.net/nms?retryWrites=true&w=majority',
+        {
+            useNewUrlParser: true,
+            useCreateIndex: true,
+            useUnifiedTopology: true,
+        },
+    )
     .then(() => console.log('DB connected'));
